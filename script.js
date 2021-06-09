@@ -1,34 +1,48 @@
 var inputField = document.getElementById("input-field");
 var button = document.getElementById("first-button");
 var ul = document.getElementById("list");
-
-function inputLength(){
-    
-    return inputField.value.length;
+let x = 0;
+function inputLength() {
+  return inputField.value.length;
 }
 
-function afterClick(){
+function afterClick() {
+  if (!inputLength()) {
+    window.alert("enter a value first");
+  }
 
-    if(inputLength() > 0){
+  if (inputLength() > 0 && x < 8) {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(inputField.value));
+    ul.appendChild(li);
+    inputField.value = "";
+    x++;
+  }
 
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(inputField.value));
-        ul.appendChild(li);
-        inputField.value = "";
-    }   
+  if (x >= 8) {
+    window.alert("Only there many to dos permitted");
+  }
 }
 
-function afterEnter(event){
+function afterEnter(event) {
+  if (inputLength() > 0 && event.key === "Enter" && x < 8) {
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(inputField.value));
+    ul.appendChild(li);
+    inputField.value = "";
+    x++;
+  }
+  console.log(x);
+  if (x >= 8) {
+    window.alert("Only there many to dos permitted");
+  }
+}
 
-    if(inputLength() > 0 && event.keyCode === 13 ){
-
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(inputField.value));
-        ul.appendChild(li);
-        inputField.value = "";
-    }   
+function afterClickd() {
+  ul.textContent = "";
 }
 
 button.addEventListener("click", afterClick);
 
 inputField.addEventListener("keypress", afterEnter);
+document.querySelector("#second-button").addEventListener("click", afterClickd);
